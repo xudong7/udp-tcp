@@ -16,12 +16,12 @@ if __name__ == '__main__':
         connectionSocket, addr = serverSocket.accept()
         print(f"Connected to {addr}")
         # 接受客户端的数据
-        sentence = connectionSocket.recv(2048)
-        print(f"Received message: {sentence.decode()} from {addr}")
+        sentence = connectionSocket.recv(2048).decode('utf-8')
+        print(f"Received message: {sentence} from {addr}")
         # 数据处理 转换为小写
-        capitalizedSentence = sentence.decode().lower()
+        capitalizedSentence = sentence.lower()
         # 把结果发送回客户端
-        connectionSocket.send(capitalizedSentence.encode())
+        connectionSocket.send(capitalizedSentence.encode('utf-8'))
         # 连接关闭
         connectionSocket.close()
     serverSocket.close()

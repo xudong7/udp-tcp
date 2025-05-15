@@ -17,15 +17,15 @@ if __name__ == '__main__':
         print(f"Connected to {addr}")
         while (True):
             # 接受客户端的数据
-            sentence = connectionSocket.recv(2048)
-            print(f"Received message: {sentence.decode()} from {addr}")
+            sentence = connectionSocket.recv(2048).decode('utf-8')
+            print(f"Received message: {sentence} from {addr}")
             # 数据处理 转换为小写
-            capitalizedSentence = sentence.decode().lower()
+            capitalizedSentence = sentence.decode('utf-8').lower()
             # 收到的消息为bye，关闭连接
             if capitalizedSentence == 'bye':
                 break
             # 把结果发送回客户端
-            connectionSocket.send(capitalizedSentence.encode())
+            connectionSocket.send(capitalizedSentence)
         # 连接关闭
         connectionSocket.close()
         print(f"Connection closed with {addr}")

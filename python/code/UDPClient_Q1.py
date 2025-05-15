@@ -11,11 +11,11 @@ if __name__ == '__main__':
     # 提示用户输入信息
     message = input('Input lowercase sentence:')
     # 发送报文,传入服务器主机名，套接字端口号
-    clientSocket.sendto(message.encode(), (serverName, serverPort))
+    clientSocket.sendto(message.encode('utf-8'), (serverName, serverPort))
     # 接收报文
-    modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
+    modifiedMessage, serverAddress = clientSocket.recvfrom(2048).decode('utf-8')
     # 打印接收的报文
-    print(modifiedMessage.decode())
+    print(modifiedMessage)
     time.sleep(1)
     # 关闭客户套接字
     clientSocket.close()

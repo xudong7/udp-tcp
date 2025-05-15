@@ -16,9 +16,9 @@ if __name__ == '__main__':
         # 接收报文
         message, clientAddress = serverSocket.recvfrom(2048)
         # 处理 将报文转换为大写
-        modifiedMessage = message.decode().upper()
+        modifiedMessage = message.decode('utf-8').upper()
         print(f"Received message: {modifiedMessage} from {clientAddress}")
         # 发送报文
-        serverSocket.sendto(modifiedMessage.encode(), clientAddress)
+        serverSocket.sendto(modifiedMessage.encode('utf-8'), clientAddress)
     serverSocket.close()
     print("Server closed")

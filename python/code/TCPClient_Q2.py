@@ -12,11 +12,11 @@ if __name__ == '__main__':
     # 输入任意字符串
     sentence = input('Input uppercase sentence:')
     # 发送任意字符串
-    clientSocket.send(sentence.encode())
+    clientSocket.send(sentence.encode('utf-8'))
     # 接受任意字符串
-    modifiedSentence = clientSocket.recv(2048)
+    modifiedSentence = clientSocket.recv(2048).decode('utf-8')
     # 输入结果
-    print('From Server: ', modifiedSentence.decode())
+    print('From Server: ', modifiedSentence)
     # 关闭socket
     clientSocket.close()
 
