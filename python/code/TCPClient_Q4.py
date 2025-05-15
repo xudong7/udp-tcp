@@ -27,16 +27,10 @@ messages = ['Modern',
             'Plain',
             '\0']
 
-# 本质上多次调用sendall后操作系统底层有可能会将数据包合并发送，比如第一次发送的数据是A，第二次是B
-# 操作系统可能会将A和B合并成C（A+B）发送，这样子接收端就可能不知道这个数据C的边界在哪，如何分割回A和B
-# 因此，为了更好的模拟实际场景，我们进一步得将数据分块发送
-def split_send(clientSocket, mes: []):
-    l, n = 0, len(mes)
-    while l < n:
-        send_len = random.randint(0, n - l) + 1
-        clientSocket.sendall(mes[l:l + send_len])
-        l += send_len
-
+def send_with_length(clientSocket, mes: []):
+    length = len(mes)
+    length_bytes = length.to_bytes(4, byteorder='big')
+    clientSocket.sendall(length_bytes + mes)
 
 if __name__ == '__main__':
     # 服务器的IP地址或主机名
@@ -53,7 +47,7 @@ if __name__ == '__main__':
         # 输出发送的消息
         print('client sent mes{}: {}'.format(mes_idx, mes))
         # 发送mes
-        split_send(clientSocket, mes.encode('UTF-8'))
+        send_with_length(clientSocket, mes.encode('UTF-8'))
         # 消息标号加一
         mes_idx += 1
     # 关闭socket
