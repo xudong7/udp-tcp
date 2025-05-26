@@ -15,6 +15,8 @@ if __name__ == '__main__':
     while (True):
         # 接收报文
         message, clientAddress = serverSocket.recvfrom(2048)
+        # 如果需要限制报文长度，将其改为
+        # message, clientAddress = serverSocket.recvfrom(5)
         # 处理 将报文转换为大写
         modifiedMessage = message.decode('utf-8').upper()
         print(f"Received message: {modifiedMessage} from {clientAddress}")
